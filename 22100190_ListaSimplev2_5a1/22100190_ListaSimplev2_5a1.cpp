@@ -40,10 +40,8 @@ public:
     bool eliminar(int registro);
     bool modificar(int registro, Persona* nuevosDatos);
     int contar();
-    void mostrar();
 
     //funciones del iterador
-    void iterador_mostrar();
     void iterador_first();
     void iterador_last();
     void iterador_next();
@@ -125,32 +123,6 @@ bool Lista::modificar(int registro, Persona* nuevosDatos) {
 
 int Lista::contar() {
     return contador;
-}
-
-void Lista::mostrar() {
-    Nodo* temp = inicio;
-    while (temp != nullptr) {
-        cout << "Nombre: " << temp->datos->nombre << endl;
-        cout << "Apellido: " << temp->datos->apellido << endl;
-        cout << "Registro: " << temp->datos->registro << endl;
-        cout << "Edad: " << temp->datos->edad << endl;
-        cout << "Direccion del nodo: " << temp << endl;
-        cout << "Direccion del siguiente nodo: " << temp->siguiente << endl << endl;
-        temp = temp->siguiente;
-    }
-}
-
-void Lista::iterador_mostrar() {
-    if (iterador != nullptr) {
-        cout << "Nodo actual" << endl;
-        cout << "Nombre: " << iterador->datos->nombre << endl;
-        cout << "Apellido: " << iterador->datos->apellido << endl;
-        cout << "Registro: " << iterador->datos->registro << endl;
-        cout << "Edad: " << iterador->datos->edad << endl << endl;
-    }
-    else {
-        cout << "El iterador no apunta a nada" << endl << endl;
-    }
 }
 
 void Lista::iterador_first() {
@@ -272,7 +244,16 @@ int main() {
             cout << "Cantidad de nodos en la lista: " << lista.contar() << endl << endl;
         }
         if (opcion == 'f') {
-            lista.mostrar();
+            Nodo* temp = lista.getInicio(); // Obtener el puntero al nodo inicial
+            while (temp != NULL) {
+                cout << "Nombre: " << temp->datos->nombre << endl;
+                cout << "Apellido: " << temp->datos->apellido << endl;
+                cout << "Registro: " << temp->datos->registro << endl;
+                cout << "Edad: " << temp->datos->edad << endl;
+                cout << "Direccion del nodo: " << temp << endl;
+                cout << "Direccion del nodo siguiente: " << temp->siguiente << endl;
+                temp = temp->siguiente;
+            }
         }
         if (opcion == 'g') {
             //submenu
@@ -314,10 +295,15 @@ int main() {
                 }
                 if (opcionIterador == 'e') {
                     lista.iterador_prev();
+                    cout << "El iterador no puede recorrerse a un nodo anterior";
                 }
                 if (opcionIterador == 'f') {
                     Nodo* nodo_actual = lista.iterador_getItem();
-                    if (nodo_actual != nullptr) {
+                    if (nodo_actual != NULL) {
+                        cout << "Direccion de memoria del nodo actual: " << nodo_actual << endl;
+                    }
+                    else {
+                        cout << "El iterador no apunta a ningun nodo" << endl << endl;
                     }
                 }
             } while (opcionIterador != 'g');
